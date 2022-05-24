@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
    root :to => "users#new"
+   patch 'edit_seat', to: 'sessions#editSeat'
+   patch 'edit_booking', to: 'sessions#editBooking'
+   delete 'delete_passenger', to: 'sessions#deletePassenger'
 
    resources :users, only: [:new, :create]
    get 'login', to: 'sessions#new'
