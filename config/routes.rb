@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
+   if Rails.env.development?
+    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
+   end
+   post "/graphql", to: "graphql#execute"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-   root :to => "users#new"
+   root 'users#new'
    patch 'edit_seat', to: 'sessions#editSeat'
    patch 'edit_booking', to: 'sessions#editBooking'
    delete 'delete_passenger', to: 'sessions#deletePassenger'

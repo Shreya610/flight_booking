@@ -4,22 +4,61 @@
 #   Ensure the SQLite 3 gem is defined in your Gemfile
 #   gem "sqlite3"
 #
-default: &default
-  adapter: sqlite3
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
+#default: &default
+#  adapter: postgresql
+#  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+#  timeout: 5000
 
-development:
-  <<: *default
-  database: db/development.sqlite3
+#development:
+#  <<: *default
+#  database: db/flight_booking
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
+#test:
+#  <<: *default
+#  database: db/flight_booking
+
+#production:
+#  <<: *default
+#  database: db/flight_booking
+
+
+# database.yml
+
+#default: &default
+#  adapter: postgresql
+#  encoding: unicode
+#  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 15 } %>
+
+#development:
+#  <<: *default
+#  database: flight_booking
+
+#test:
+#  <<: *default
+#  database: flight_booking
+
+#production:
+#  <<: *default
+#  url: <%= ENV['DATABASE_URL'] %>~  
+
+
+development:
+  adapter: sqlite3
+  database: db/development.sqlite3
+  pool: 5
+  timeout: 5000
+
 test:
-  <<: *default
+  adapter: sqlite3
   database: db/test.sqlite3
+  pool: 5
+  timeout: 5000
 
 production:
-  <<: *default
+  adapter: sqlite3
   database: db/production.sqlite3
+  pool: 5
+  timeout: 5000              
