@@ -1,0 +1,303 @@
+<% if logged_in? %>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertModal">
+  Create Flight Configuration
+</button>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+<%= form_with url: bookings_delete_path, method: :delete do |form| %>
+  <%= form.label :Delete? %>
+
+  <%= form.hidden_field :deletePnr %>
+
+  <%= form.submit "OK" %>
+<% end %>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+<%= form_with url: bookings_edit_path, method: :patch do |form| %>
+ <div class="mb-3">
+  <%= form.label :name, "Flight Name:" %>
+  <%= form.text_field :updateName %>
+</div>
+  <%= form.hidden_field :updatePnr %>
+ <div class="mb-3">
+  <%= form.label :origin, "Origin:" %>
+  <%= form.text_field :updateOrigin %>
+</div>
+ <div class="mb-3">
+  <%= form.label :destination, "Destination:" %>
+  <%= form.text_field :updateDestination %>
+</div>
+ <div class="mb-3">
+  <%= form.label :dateOfFlight, "Date Of Flight:" %>
+
+<%= form.date_field :updateDateOfFlight %>
+</div>
+ <div class="mb-3">
+  <%= form.label :basePrice, "Base Price:" %>
+<%= form.number_field :updateBasePrice %>
+</div>
+ <div class="mb-3">
+  <%= form.label :numberOfRows, "Number Of Rows:" %>
+<%= form.number_field :updateNumberOfRows %>
+</div>
+ <div class="mb-3">
+  <%= form.label :seatsInRow, "Seats In Row:" %>
+
+<%= form.select :updateSeatsInRow, [1,2,3,4,5,6] %>
+ </div>
+
+  <%= form.submit "Update" %>
+<% end %>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="insertModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Flight Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+<%= form_with url: bookings_path, method: :post do |form| %>
+ <div class="mb-3">
+  <%= form.label :name, "Flight Name:" %>
+  <%= form.text_field :name %>
+</div>
+ <div class="mb-3">
+  <%= form.label :firstClassPnr, "First Class PNR:" %>
+  <%= form.text_field :firstClassPnr %>
+</div>
+ <div class="mb-3">
+  <%= form.label :businessClassPnr, "Business Class PNR:" %>
+  <%= form.text_field :businessClassPnr %>
+</div>
+ <div class="mb-3">
+  <%= form.label :economyClassPnr, "Economy Class PNR:" %>
+  <%= form.text_field :economyClassPnr %>
+</div>
+ <div class="mb-3">
+  <%= form.label :origin, "Origin:" %>
+  <%= form.text_field :origin %>
+</div>
+ <div class="mb-3">
+  <%= form.label :destination, "Destination:" %>
+  <%= form.text_field :destination %>
+</div>
+ <div class="mb-3">
+  <%= form.label :dateOfFlight, "Date Of Flight:" %>
+
+<%= form.date_field :dateOfFlight %>
+</div>
+ <div class="mb-3">
+  <%= form.label :firstClassBasePrice, "First Class Base Price:" %>
+<%= form.number_field :firstClassBasePrice %>
+</div>
+ <div class="mb-3">
+  <%= form.label :firstClassNumberOfRows, "First Class Number Of Rows:" %>
+<%= form.number_field :firstClassNumberOfRows %>
+</div>
+ <div class="mb-3">
+  <%= form.label :firstClassSeatsInRow, "First Class Seats In Row:" %>
+
+<%= form.select :firstClassSeatsInRow, [1,2,3,4,5,6] %>
+ </div>
+ <div class="mb-3">
+  <%= form.label :businessClassBasePrice, "Business Class Base Price:" %>
+<%= form.number_field :businessClassBasePrice %>
+</div>
+ <div class="mb-3">
+  <%= form.label :businessClassNumberOfRows, "Business Class Number Of Rows:" %>
+<%= form.number_field :businessClassNumberOfRows %>
+</div>
+ <div class="mb-3">
+  <%= form.label :businessClassSeatsInRow, "Business Class Seats In Row:" %>
+
+<%= form.select :businessClassSeatsInRow, [1,2,3,4,5,6] %>
+ </div>
+ <div class="mb-3">
+  <%= form.label :economyClassBasePrice, "Economy Class Base Price:" %>
+<%= form.number_field :economyClassBasePrice %>
+</div>
+ <div class="mb-3">
+  <%= form.label :economyClassNumberOfRows, "Economy Class Number Of Rows:" %>
+<%= form.number_field :economyClassNumberOfRows %>
+</div>
+ <div class="mb-3">
+  <%= form.label :economyClassSeatsInRow, "Economy Class Seats In Row:" %>
+
+<%= form.select :economyClassSeatsInRow, [1,2,3,4,5,6] %>
+ </div>
+
+  <%= form.submit "Submit" %>
+<% end %>        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">PNR</th>
+      <th scope="col">Date Of Flight</th>
+      <th scope="col">Name</th>
+      <th scope="col">origin</th>
+      <th scope="col">Destination</th>
+      <th scope="col">Base Price</th>
+
+      <th scope="col">Flight Category</th>
+      <th scope="col">Number Of Rows</th>
+      <th scope="col">Seats In Rows</th>
+      <th scope="col">Delete</th>
+      <th scope="col">Edit</th>
+      
+
+    </tr>
+  </thead>
+  <tbody>
+<% @flights.each do |flight| %>
+    <tr>
+   <td> <%= flight.PNR %></td>
+<td> <%= flight.dateOfFlight %></td>
+<td> <%= flight.name %></td>
+<td> <%= flight.origin %></td>
+<td> <%= flight.destination %></td>
+<td> <%= flight.basePrice %></td>
+<td> <%= flight.category %></td>
+<td> <%= flight.numberOfRows %></td>
+<td> <%= flight.seatsInRow %></td>
+<td> <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">
+Delete</button>
+</td>
+<td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal">
+Edit</button>
+</td>
+</tr>
+<% end %>
+    
+  </tbody>
+</table>
+
+<script>
+$(document).on('show.bs.modal', '#insertModal', function (e) {
+
+var characters = 'QWERTYUIOPASDFGHJKLZXCVBNM0123456789';
+var result = ""
+var charactersLength = characters.length;
+
+for ( var i = 0; i < 8 ; i++ ) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+}
+
+$('#firstClassPnr').val(result)
+result=""
+for ( var i = 0; i < 8 ; i++ ) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+}
+
+$('#businessClassPnr').val(result)
+result=""
+for ( var i = 0; i < 8 ; i++ ) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+}
+
+$('#economyClassPnr').val(result)
+
+
+});
+
+$(document).on('show.bs.modal', '#updateModal', function (e) {
+
+var table = document.getElementsByTagName("table")[0];
+var tbody = table.getElementsByTagName("tbody")[0];
+tbody.onclick = function (e) {
+    e = e || window.event;
+    var data = [];
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "TR") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("td");
+        for (var i = 0; i < cells.length; i++) {
+            data.push(cells[i].innerHTML);
+        }
+    }
+var pnr=data[0].replace(" ","")
+$('#updateName').val(data[2])
+$('#updatePnr').val(pnr)
+$('#updateOrigin').val(data[3])
+$('#updateDestination').val(data[4])
+$('#updateBasePrice').val(parseInt(data[5]))
+$('#updateNumberOfRows').val(parseInt(data[7]))
+$('#updateSeatsInRow').val(parseInt(data[8]))
+$('#updateDateOfFlight').val(parseInt(data[1]))
+
+};
+
+});
+$(document).on('show.bs.modal', '#deleteModal', function (e) {
+
+var table = document.getElementsByTagName("table")[0];
+var tbody = table.getElementsByTagName("tbody")[0];
+tbody.onclick = function (e) {
+    e = e || window.event;
+    var data = [];
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "TR") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("td");
+        for (var i = 0; i < cells.length; i++) {
+            data.push(cells[i].innerHTML);
+        }
+    }
+var pnr=data[0].replace(" ","")
+
+$('#deletePnr').val(pnr)
+
+};
+
+});
+
+</script>
+<%end%>
+

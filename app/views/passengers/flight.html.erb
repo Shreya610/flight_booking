@@ -1,0 +1,369 @@
+<% if logged_in? %>
+<h1>My Booking</h1>
+
+
+<div class="modal fade" id="editBookingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+<%= form_with url: edit_booking_path, method: :patch do |form| %>
+ <div class="mb-3">
+  <%= form.label :flightRow, "Select PNR:" %>
+
+<%= form.select :bookingPnr,[] %>
+ </div>
+<%= form.hidden_field :bookingFlightId %>
+
+
+  <%= form.submit "Book" %>
+<% end %>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="modal fade" id="editSeatModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Select seat</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+<%= form_with url: edit_seat_path, method: :patch do |form| %>
+ <div class="mb-3">
+  <%= form.label :flightRow, "Flight Row:" %>
+
+<%= form.select :updateFlightRow,[] %>
+ </div>
+<%= form.hidden_field :updateFlightId %>
+ <div class="mb-3">
+  <%= form.label :updateFlightColumn, "Flight Column:" %>
+
+<%= form.select :updateFlightColumn,[] %>
+ </div>
+
+  <%= form.submit "Update" %>
+<% end %>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="modal fade" id="selectSeatModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Select seat</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+<%= form_with url: passenger_path, method: :post do |form| %>
+ <div class="mb-3">
+  <%= form.label :flightRow, "Flight Row:" %>
+
+<%= form.select :flightRow,[] %>
+ </div>
+<%= form.hidden_field :pnr %>
+ <div class="mb-3">
+  <%= form.label :flightColumn, "Flight Column:" %>
+
+<%= form.select :flightColumn,[] %>
+ </div>
+
+  <%= form.submit "Book" %>
+<% end %>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+<%= form_with url: delete_passenger_path, method: :delete do |form| %>
+  <%= form.label :Delete? %>
+
+  <%= form.hidden_field :flightId %>
+
+  <%= form.submit "OK" %>
+<% end %>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">PNR</th>
+      <th scope="col">Date Of Flight</th>
+      <th scope="col">Name</th>
+      <th scope="col">origin</th>
+      <th scope="col">Destination</th>
+      <th scope="col">Price</th>
+
+      <th scope="col">Flight Category</th>
+      <th scope="col" style="visibility:collapse">Row</th>
+      <th scope="col" style="visibility:collapse">Row</th>
+      <th scope="col" style="visibility:collapse">Row</th>
+      <th scope="col" style="visibility:collapse">Row</th>
+      <th scope="col" style="visibility:collapse">Row</th>
+      <th scope="col">Edit Seat</th>
+      <th scope="col">Edit Booking</th>
+ <th scope="col">Delete Flight</th>
+
+    </tr>
+  </thead>
+  <tbody>
+<% @passengers.each do |passenger| %>
+    <tr>
+   <td> <%= passenger['PNR'] %></td>
+<td> <%= passenger['dateOfFlight'] %></td>
+<td> <%= passenger['name'] %></td>
+<td> <%= passenger['origin'] %></td>
+<td> <%= passenger['destination'] %></td>
+<td> <%= passenger['basePrice'] %></td>
+<td> <%= passenger['category'] %></td>
+<td style="visibility:collapse"> <%= passenger['numberOfRows'] %></td>
+<td style="visibility:collapse"> <%= passenger['seatsInRow'] %></td>
+<td style="visibility:collapse"> <%= passenger['flight_id'] %></td>
+<td style="visibility:collapse"> <%= passenger['flightRow'] %></td>
+<td style="visibility:collapse"> <%= passenger['flightColumn'] %></td>
+
+
+<td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editSeatModal">
+Select</button></td>
+<td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editBookingModal">
+Edit </button>
+</td>
+<td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">
+Delete</button>
+</td>
+</tr>
+<% end %>
+
+  </tbody>
+</table>
+<br/>
+<h1>Flights</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">PNR</th>
+      <th scope="col">Date Of Flight</th>
+      <th scope="col">Name</th>
+      <th scope="col">origin</th>
+      <th scope="col">Destination</th>
+      <th scope="col">Price</th>
+
+      <th scope="col">Flight Category</th>
+      <th scope="col" style="visibility:collapse">Row</th>
+      <th scope="col" style="visibility:collapse">Column</th>
+
+      <th scope="col">Book Flight</th>
+      
+
+    </tr>
+  </thead>
+  <tbody>
+<% @flights.each do |flight| %>
+    <tr>
+   <td> <%= flight.PNR %></td>
+<td> <%= flight.dateOfFlight %></td>
+<td> <%= flight.name %></td>
+<td> <%= flight.origin %></td>
+<td> <%= flight.destination %></td>
+<td> <%= flight.basePrice %></td>
+<td> <%= flight.category %></td>
+<td style="visibility:collapse"> <%= flight.numberOfRows %></td>
+<td style="visibility:collapse"> <%= flight.seatsInRow %></td>
+
+<td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#selectSeatModal">
+Select</button></td>
+</tr>
+<% end %>
+    
+  </tbody>
+</table>
+<script>
+$(document).on('show.bs.modal', '#selectSeatModal', function (e) {
+var table = document.getElementsByTagName("table")[1];
+var tbody = table.getElementsByTagName("tbody")[0];
+tbody.onclick = function (e) {
+    e = e || window.event;
+    var data = [];
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "TR") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("td");
+        for (var i = 0; i < cells.length; i++) {
+            data.push(cells[i].innerHTML);
+        }
+    }
+var pnr=data[0].replace(" ","")
+$('#pnr').val(pnr)
+for(var i=1;i<=data[7];++i)
+{
+$('#flightRow').append(new Option(i,i))
+}
+
+for(var i=1;i<=data[8];++i)
+{
+$('#flightColumn').append(new Option(i,i))
+}
+
+$('#pnr').val(pnr)
+};
+
+});
+
+$(document).on('hidden.bs.modal', '#selectSeatModal', function (e) {
+$('#flightRow')[0].options.length=0
+$('#flightColumn')[0].options.length=0
+
+
+});
+$(document).on('show.bs.modal', '#deleteModal', function (e) {
+var table = document.getElementsByTagName("table")[0];
+var tbody = table.getElementsByTagName("tbody")[0];
+tbody.onclick = function (e) {
+    e = e || window.event;
+    var data = [];
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "TR") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("td");
+        for (var i = 0; i < cells.length; i++) {
+            data.push(cells[i].innerHTML);
+        }
+    }
+$('#flightId').val(data[9])
+};
+
+});
+$(document).on('show.bs.modal', '#editSeatModal', function (e) {
+var table = document.getElementsByTagName("table")[0];
+var tbody = table.getElementsByTagName("tbody")[0];
+tbody.onclick = function (e) {
+    e = e || window.event;
+    var data = [];
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "TR") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("td");
+        for (var i = 0; i < cells.length; i++) {
+            data.push(cells[i].innerHTML);
+        }
+    }
+$('#updateFlightId').val(data[9])
+for(var i=1;i<=data[7];++i)
+{
+$('#updateFlightRow').append(new Option(i,i))
+}
+
+for(var i=1;i<=data[8];++i)
+{
+$('#updateFlightColumn').append(new Option(i,i))
+}
+$('#updateFlightRow').val(parseInt(data[10]))
+$('#updateFlightColumn').val(parseInt(data[11]))
+};
+
+});
+
+$(document).on('hidden.bs.modal', '#editSeatModal', function (e) {
+$('#updateFlightRow')[0].options.length=0
+$('#updateFlightColumn')[0].options.length=0
+
+
+});
+$(document).on('show.bs.modal', '#editBookingModal', function (e) {
+var table = document.getElementsByTagName("table")[1];
+var tbody = table.getElementsByTagName("tbody")[0];
+
+var rows = tbody.getElementsByTagName("tr");
+        for (var i = 0; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName("td");
+             var pnr=cells[0].innerHTML
+            pnr=pnr.replace(" ","")
+            $('#bookingPnr').append(new Option(pnr,pnr))
+        }
+
+
+
+var table = document.getElementsByTagName("table")[0];
+var tbody = table.getElementsByTagName("tbody")[0];
+tbody.onclick = function (e) {
+    e = e || window.event;
+    var data = [];
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "TR") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("td");
+        for (var i = 0; i < cells.length; i++) {
+            data.push(cells[i].innerHTML);
+        }
+    }
+$('#bookingFlightId').val(parseInt(data[9]))
+
+ $('#bookingPnr').val(data[0])
+
+};
+
+
+});
+
+$(document).on('hidden.bs.modal', '#editBookingModal', function (e) {
+$('#bookingPnr')[0].options.length=0
+
+
+});
+</script>
+<%end%>
+

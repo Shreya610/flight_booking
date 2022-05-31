@@ -1,0 +1,51 @@
+<% if logged_in? %>
+
+   
+<div class="col-md-10 col-md-offset-1" id="search-form">
+  <h1 class="text-center">Search for flights: </h1><br/>
+  <%= form_with model: @flight,url: user_flights_path, html: {method: :get}  do |f| %>
+      <div class="row">
+        <div class="col-md-4 col-md-offset-2 text-center">
+          <%= f.label :origin%>
+          <%= f.select(:origin, @origins, {selected: @from}, {:class => 'form-control', id: 'origin'}) %>
+          <br/>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <%= f.label :destination %>
+          <%= f.select(:destination, @destinations, {selected: @to}, {:class => 'form-control', id: 'to_destination'}) %>
+        </div>
+      </div>
+
+      <br/>
+      <br/>
+
+      <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+          <%= f.submit "Search", id: 'search-btn', class: 'form-control btn btn-primary btn-block search-btn' %>
+        </div>
+      </div>
+  <% end %>
+</div>
+<br/>
+
+<div id="results" style="display: none;">
+
+</div>
+
+<script type="text/javascript">
+
+
+    $('#search-btn').click(function () {
+        $from = $('#origin option:selected').text();
+        $to = $('#destination option:selected').text();
+        if ($from == $to) {
+            alert("Can't fly to the same city");
+        }
+    });
+
+
+</script>
+
+
+<%end%>

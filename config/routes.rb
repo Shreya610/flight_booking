@@ -4,28 +4,33 @@ Rails.application.routes.draw do
    end
    post "/graphql", to: "graphql#execute"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-   root 'users#new'
-   patch 'edit_seat', to: 'sessions#editSeat'
-   patch 'edit_booking', to: 'sessions#editBooking'
-   delete 'delete_passenger', to: 'sessions#deletePassenger'
+   root 'registrations#index'
+   patch 'edit_seat', to: 'passengers#editSeat'
+   patch 'edit_booking', to: 'passengers#editBooking'
+   delete 'delete_passenger', to: 'passengers#deletePassenger'
 
    resources :users, only: [:new, :create]
-   get 'login', to: 'sessions#new'
-   post 'login', to: 'sessions#create'
-   get 'welcome', to: 'sessions#welcome'
-   get 'welcomeAdmin', to: 'sessions#admin'
-   get 'loginAdmin', to: 'sessions#login'
-   post 'loginAdmin', to: 'sessions#adminlogin'
-   get 'flights' , to: 'sessions#welcome'
-   get 'user_flights', to: 'sessions#flight'
-   post 'bookings', to: 'sessions#bookings'
-   get 'signup', to: 'users#new'
-   patch 'bookings_edit', to: 'sessions#bookingEdit'
-   delete 'bookings_delete', to: 'sessions#bookingDelete'
-   post 'passenger', to: 'sessions#passenger'
-   post 'signup', to: 'users#create'
-   get 'admin', to: 'users#index'
-   post 'admin', to: 'users#signup'
+   get 'welcome', to: 'passengers#welcome'
+
+   get 'flights' , to: 'passengers#welcome'
+   get 'user_flights', to: 'passengers#flight'
+   post 'bookings', to: 'flights#bookings'
+   patch 'bookings_edit', to: 'flights#bookingEdit'
+   delete 'bookings_delete', to: 'flights#bookingDelete'
+   post 'passenger', to: 'passengers#passenger'
+
+   get 'flights', to: 'flights#index'
+
+
+   get 'login', to: 'sessions#index'
+   post 'login', to: 'sessions#index'
+   get 'loginAdmin', to: 'sessions#admin'
+   post 'loginAdmin', to: 'sessions#admin'
+
+   get 'signup', to: 'registrations#index'
+   post 'signup', to: 'registrations#index'
+   get 'admin', to: 'registrations#admin'
+   post 'admin', to: 'registrations#admin'
   # Defines the root path route ("/")
   # root "articles#index"
 end
